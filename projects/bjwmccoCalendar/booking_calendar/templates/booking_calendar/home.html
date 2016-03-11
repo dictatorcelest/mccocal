@@ -17,6 +17,11 @@
     }
 
     function generateCurrentMonthCalendar(){
+    	var appointment_list = {{ selected_period_items|safe }};
+      	for (r in appointment_list){
+      		var str = JSON.stringify(appointment_list);
+      		var obj = JSON.parse(str);
+      	}
     	var today = new Date();
           		var year = today.getFullYear();      //本年
         		var month = today.getMonth() + 1;    //本月
@@ -72,7 +77,20 @@
         					}
         					for (m ; m <= j; m++){
         						html +='<td class="text-center" style="background-color:lightgrey">';
-        						html += m.toString(); 
+        						//get the Django's data and parse to JSON object; then decide which day should map in as a button;
+        						for (q in obj){
+      								var obj_day = Number(obj[q].fields.start_time.split('-')[2].split('T')[0]);
+      								var obj_pk = obj[q].pk;
+      								var obj_subject = obj[q].fields.subject;
+      								html += '<div class="btn-group-vertical" role="group" aria-label="...">';
+      								if (obj_day = m){
+      									html += '<button type="button" class="btn btn-primary">';
+      									html += obj_subject;
+      									html += '</button>';
+      								}
+      								html += '</div>';
+      							}
+        						//html += m.toString(); 
         						html +='</td>';
         						k++;
         					}
@@ -177,13 +195,7 @@
     		<div class="container">
       			<h1>Appointments</h1>
       			<p><script type="text/javascript">
-      				var appointment_list = {{ selected_period_items|safe }};
-      				for (i in appointment_list){
-      					var str = JSON.stringify(appointment_list);
-      					var obj = JSON.parse(str);
-      					document.write(obj[i].fields.subject);
-      					document.write('<br/>');
-      				}
+      				
       			</script></p>    
     		</div>
   	</div>
