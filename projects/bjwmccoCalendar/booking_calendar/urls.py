@@ -8,6 +8,7 @@ from booking_calendar import views
 
 app_name = 'booking_calendar'
 urlpatterns = [
-               url(r'^$', views.HomeView.as_view(), name='home'),
+               url(r'^$', views.CurrentMonthView, name='home'),
                url(r'^(?P<exchange_id>[A-Za-z0-9+/=]+)/$', views.ItemDetailView, name='detail'),
+               #url(r'^calendar/$', views.CalendarView.as_view(), name='calendar'),
                ]

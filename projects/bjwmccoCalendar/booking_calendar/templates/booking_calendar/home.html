@@ -9,9 +9,109 @@
 	<title>bjwmcco calendar app using bootstrap3</title>
 	<!-- Bootstrap core CSS -->
 	<link href="//cdn.bootcss.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
+	<script type="text/javascript">
 
+	function displayCurrentMonthYear(){
+		var n = new Date();    
+        return document.write(n.getMonth()+1+"/"+n.getFullYear());
+    }
+
+    function generateCurrentMonthCalendar(){
+    	var today = new Date();
+          		var year = today.getFullYear();      //本年
+        		var month = today.getMonth() + 1;    //本月
+        		var day = today.getDate();           //本日
+ 
+        			//本月第一天是星期几（距星期日离开的天数）
+        		var startDay = new Date(year, month - 1, 1).getDay();
+ 
+        		//本月有多少天(即最后一天的getDate()，但是最后一天不知道，我们可以用“上个月的0来表示本月的最后一天”)
+        		var nDays = new Date(year, month, 0).getDate();
+ 
+        		//开始画日历
+        		var numInRow = 0;  //记录行的个数，到达7的时候创建tr
+        		var i;        //Counter for non-current month days;
+        		var j = 1; //Current month days;
+        		var html = '';//Output of the html;
+        		var m = 1 ;
+        		html += '<tr>';//Start the first week row;
+        		//Set the first empty days until the first day of the current month;
+        		for (i = 0; i < startDay; i++) {
+            		html += '<td class="text-center" style="background-color:lightgrey"></td>';
+            		numInRow++;
+        		}
+
+        		//Draw the current month's days accordingly;
+        		for (j ; j <= nDays;	j++){
+        			//If the day is today, change the appearance of the cell;
+        			if (j == day) {
+        				html += '<td class="text-center" style="background-color:#99ccff">'+ j.toString() +'</td>';
+        				numInRow++;
+        			}
+        			else if(j == nDays){//Complete the last row of the calendar day.
+        				html += '<td class="text-center" style="background-color:grey">'+ j.toString() +'</td>';
+        				var c = numInRow;
+        				for (var c = numInRow+1; c<7; c++){
+        				html += '<td class="text-center" style="background-color:lightgrey"></td>';	
+        				}
+        				numInRow = 7;
+        			}        			
+        			else{
+        				html += '<td class="text-center" style="background-color:grey">'+ j.toString() +'</td>';
+        				numInRow++;
+        			}
+        			
+        			if (numInRow == 7){
+        				numInRow = 0;
+        				html += '</tr><tr>'
+        				var k = 0;//Counter for cell;
+        				if (j < 7) {
+        					for (i = 0; i < startDay; i++) {
+        						html += '<td class="text-center" style="background-color:lightgrey"></td>';
+        						k++;
+        					}
+        					for (m ; m <= j; m++){
+        						html +='<td class="text-center" style="background-color:lightgrey">';
+        						html += m.toString(); 
+        						html +='</td>';
+        						k++;
+        					}
+        				}
+        				else if(j == nDays){
+        					for (m ; m <= j; m++){
+        						html += '<td class="text-center" style="background-color:lightgrey">'+ m.toString() +'</td>';
+        						k++;
+        					}
+        				}
+        				else{
+        					for (m ; m <= j; m++){
+        						html += '<td class="text-center" style="background-color:lightgrey">'+ m.toString() +'</td>';
+        						k++;
+        					}
+        				}
+        				if (k == 7){
+        				k = 0;
+        				html += '</tr><tr>'
+        				}
+        				//Insert blank slots for event added;
+        				//var slot = 4;//Number of timeslots in a day;
+        				
+        				//var s = 1;//Counter for slots in one day;
+        				//for (s = 1; s <= slot; s++){
+        					//for (k = 1; k <= 7; k++) {
+        						//html += '<td class="text-center" style="background-color:lightgrey"></td>';
+        						//if (k == 7){
+        							//html += '</tr><tr>';
+        						//}        					
+        					//}
+        				//}
+        			}        			
+        		}
+        		return document.write(html);
+    }
+    </script>
     <!-- Custom styles for this template -->
-    <link href="starter-template.css" rel="stylesheet">
+   <!-- <link href="starter-template.css" rel="stylesheet"> -->
 </head>
 <body>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
@@ -33,16 +133,83 @@
           </ul>
         </div><!--/.nav-collapse -->
       </div>
-    </nav>
-<!--
+  </nav>
+
     <div class="jumbotron">
+      <div class="row">
+      	<div class="col-md-2">
+      	</div>
+      	<div class="col-md-1 text-center" style="display: table-cell; height: 100%; min-height: 100%; float: none;">
+      		<p><a class="btn btn-primary btn-lg" href="#" role="button">&laquo;Prev.</a></p>      		
+      	</div>
+      	<div class="col-md-6 text-center" style="display: table-cell; height: 100%; min-height: 100%; float: none;">
+        	<h1 id="calendarheader">
+          	<script type="text/javascript">
+            	displayCurrentMonthYear();
+          	</script>
+        	</h1>
+        </div>
+        <div class="col-md-1 text-center" style="display: table-cell; height: 100%; min-height: 100%; float: none;">
+        	<p><a class="btn btn-primary btn-lg" href="#" role="button">Next&raquo;</a></p>          	
+      	</div>
+      	<div class="col-md-2">
+      	</div>
+      </div>
       <div class="container">
-        <h1>Hello, world!</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+        <table class="table table-bordered table-hover">
+          <thead><tr>
+            <th class="danger text-center">Sun.</th>
+            <th class="info text-center">Mon.</th>
+            <th class="info text-center">Tue.</th>
+            <th class="info text-center">Wed.</th>
+            <th class="info text-center">Thu.</th>
+            <th class="info text-center">Fri.</th>
+            <th class="danger text-center">Sat.</th>
+          </tr></thead>
+          <tbody>          	
+          	<script type="text/javascript">
+          		generateCurrentMonthCalendar();        		
+          	</script>          	
+          </tbody>
+        </table>
+      </div>
+      <div class="jumbotron">
+    		<div class="container">
+      			<h1>Appointments</h1>
+      			<p><script type="text/javascript">
+      				var appointment_list = {{ selected_period_items|safe }};
+      				for (i in appointment_list){
+      					var str = JSON.stringify(appointment_list);
+      					var obj = JSON.parse(str);
+      					document.write(obj[i].fields.subject);
+      					document.write('<br/>');
+      				}
+      			</script></p>    
+    		</div>
+  	</div>
+<!--
+      <div class="container">
+        <div class="row" style='height:1em';>
+          <div class="col-md-1 text-center" style='background-color:pink'>Sun.</div>
+          <div class="col-md-2 text-center" style='background-color:lightblue'>Mon.</div>
+          <div class="col-md-2 text-center" style='background-color:lightblue'>Tue.</div>
+          <div class="col-md-2 text-center" style='background-color:lightblue'>Wed.</div>
+          <div class="col-md-2 text-center" style='background-color:lightblue'>Thu.</div>
+          <div class="col-md-2 text-center" style='background-color:lightblue'>Fri.</div>
+          <div class="col-md-1 text-center" style='background-color:pink'>Sat.</div>
+        </div>
+        <div class="row" style='height:1.5em';>
+          <div class="col-md-1 text-center" style='background-color:darkgrey' id="1-0">Sun.</div>
+          <div class="col-md-2 text-center" style='background-color:darkgrey' id="1-1">Mon.</div>
+          <div class="col-md-2 text-center" style='background-color:darkgrey' id="1-2">Tue.</div>
+          <div class="col-md-2 text-center" style='background-color:darkgrey' id="1-3">Wed.</div>
+          <div class="col-md-2 text-center" style='background-color:darkgrey' id="1-4">Thu.</div>
+          <div class="col-md-2 text-center" style='background-color:darkgrey' id="1-5">Fri.</div>
+          <div class="col-md-1 text-center" style='background-color:darkgrey' id="1-6">Sat.</div>
+        </div>
       </div>
     </div>
--->
+
   <div class="jumbotron">
     <div class="container">
       <h1>Appointments</h1>
@@ -50,7 +217,7 @@
         <table class="table-striped">
           {% for item in selected_period_items %}
           <tr>
-            <td>{{ item.start_time }}</td>
+            <td>{{ item.start_time.date}}</td>
             <td><a href="/booking_calendar/{{ item.exchange_id }}/">{{ item.subject }}</a></td>
           </tr>
           {% endfor %} 
@@ -60,6 +227,7 @@
       {% endif %}      
     </div>
   </div>
+-->
     <!-- /.container -->
 <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -67,6 +235,6 @@
     <script src="//cdn.bootcss.com/jquery/1.11.3/jquery.min.js"></script>
     <script src="//cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+    <!--<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>-->
 </body>
 </html>
