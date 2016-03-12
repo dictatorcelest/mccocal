@@ -83,10 +83,12 @@
       								var obj_pk = obj[q].pk;
       								var obj_subject = obj[q].fields.subject;
       								html += '<div class="btn-group-vertical" role="group" aria-label="...">';
-      								if (obj_day = m){
-      									html += '<button type="button" class="btn btn-primary">';
-      									html += obj_subject;
-      									html += '</button>';
+      								if (obj_day == m){
+      									html += '<a type="button" class="btn btn-primary btn-xs" href="booking_calendar/';
+      									html += obj_pk;
+      									html += '/">';
+      									html += obj_subject.split('Microsoft')[0];
+      									html += '</a>';
       								}
       								html += '</div>';
       							}
@@ -97,13 +99,47 @@
         				}
         				else if(j == nDays){
         					for (m ; m <= j; m++){
-        						html += '<td class="text-center" style="background-color:lightgrey">'+ m.toString() +'</td>';
+        						html +='<td class="text-center" style="background-color:lightgrey">';
+        						//get the Django's data and parse to JSON object; then decide which day should map in as a button;
+        						for (q in obj){
+      								var obj_day = Number(obj[q].fields.start_time.split('-')[2].split('T')[0]);
+      								var obj_pk = obj[q].pk;
+      								var obj_subject = obj[q].fields.subject;
+      								html += '<div class="btn-group-vertical" role="group" aria-label="...">';
+      								if (obj_day == m){
+      									html += '<a type="button" class="btn btn-primary btn-xs" href="booking_calendar/';
+      									html += obj_pk;
+      									html += '/">';
+      									html += obj_subject.split('Microsoft')[0];
+      									html += '</a>';
+      								}
+      								html += '</div>';
+      							}
+        						//html += m.toString(); 
+        						html +='</td>';
         						k++;
         					}
         				}
         				else{
         					for (m ; m <= j; m++){
-        						html += '<td class="text-center" style="background-color:lightgrey">'+ m.toString() +'</td>';
+        						html +='<td class="text-center" style="background-color:lightgrey">';
+        						//get the Django's data and parse to JSON object; then decide which day should map in as a button;
+        						for (q in obj){
+      								var obj_day = Number(obj[q].fields.start_time.split('-')[2].split('T')[0]);
+      								var obj_pk = obj[q].pk;
+      								var obj_subject = obj[q].fields.subject;
+      								html += '<div class="btn-group-vertical" role="group" aria-label="...">';
+      								if (obj_day == m){
+      									html += '<a type="button" class="btn btn-primary btn-xs" href="booking_calendar/';
+      									html += obj_pk;
+      									html += '/">';
+      									html += obj_subject.split('Microsoft')[0];
+      									html += '</a>';
+      								}
+      								html += '</div>';
+      							}
+        						//html += m.toString(); 
+        						html +='</td>';
         						k++;
         					}
         				}
