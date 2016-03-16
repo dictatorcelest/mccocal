@@ -7,6 +7,7 @@ from .sync_calendar import get_entry
 from django.http import Http404
 from pytz import timezone
 from django.core import serializers
+from booking_calendar.sync_calendar import sync
 
 
 def CurrentMonthView(request):
@@ -15,6 +16,9 @@ def CurrentMonthView(request):
         year = now.year
         month = now.month
         next_month = month+1
+        st = timezone('Asia/Shanghai').localize(datetime.datetime(year, month, 1, 0,0,0))
+        et = timezone('Asia/Shanghai').localize(datetime.datetime(year, next_month, 1, 0,0,0))
+        sync(st, et)
         current_month_appointment = Appointment.objects.filter(start_time__range = (timezone('Asia/Shanghai').localize(datetime.datetime(year, month, 1, 0,0,0)), timezone('Asia/Shanghai').localize(datetime.datetime(year, next_month, 1, 0,0,0))))
         template_name ='booking_calendar/home.html'
         selected_period_items = serializers.serialize("json", current_month_appointment)

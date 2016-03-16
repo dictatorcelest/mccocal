@@ -42,7 +42,7 @@
         		html += '<tr>';//Start the first week row;
         		//Set the first empty days until the first day of the current month;
         		for (i = 0; i < startDay; i++) {
-            		html += '<td class="text-center" style="background-color:lightgrey"></td>';
+            		html += '<td class="col-md-1 text-center" style="background-color:lightgrey"></td>';
             		numInRow++;
         		}
 
@@ -50,19 +50,19 @@
         		for (j ; j <= nDays;	j++){
         			//If the day is today, change the appearance of the cell;
         			if (j == day) {
-        				html += '<td class="text-center" style="background-color:#99ccff">'+ j.toString() +'</td>';
+        				html += '<td class="col-md-1 text-center" style="background-color:#99ccff">'+ j.toString() +'</td>';
         				numInRow++;
         			}
         			else if(j == nDays){//Complete the last row of the calendar day.
-        				html += '<td class="text-center" style="background-color:grey">'+ j.toString() +'</td>';
+        				html += '<td class="col-md-1 text-center" style="background-color:grey">'+ j.toString() +'</td>';
         				var c = numInRow;
         				for (var c = numInRow+1; c<7; c++){
-        				html += '<td class="text-center" style="background-color:lightgrey"></td>';	
+        				html += '<td class="col-md-1 text-center" style="background-color:lightgrey"></td>';	
         				}
         				numInRow = 7;
         			}        			
         			else{
-        				html += '<td class="text-center" style="background-color:grey">'+ j.toString() +'</td>';
+        				html += '<td class="col-md-1 text-center" style="background-color:grey">'+ j.toString() +'</td>';
         				numInRow++;
         			}
         			
@@ -72,11 +72,11 @@
         				var k = 0;//Counter for cell;
         				if (j < 7) {
         					for (i = 0; i < startDay; i++) {
-        						html += '<td class="text-center" style="background-color:lightgrey"></td>';
+        						html += '<td class="col-md-1 text-center" style="background-color:lightgrey"></td>';
         						k++;
         					}
         					for (m ; m <= j; m++){
-        						html +='<td class="text-center" style="background-color:lightgrey">';
+        						html +='<td class="col-md-1 text-center" style="background-color:lightgrey">';
         						//get the Django's data and parse to JSON object; then decide which day should map in as a button;
         						for (q in obj){
       								var obj_day = Number(obj[q].fields.start_time.split('-')[2].split('T')[0]);
@@ -84,7 +84,7 @@
       								var obj_subject = obj[q].fields.subject;
       								html += '<div class="btn-group-vertical" role="group" aria-label="...">';
       								if (obj_day == m){
-      									html += '<a type="button" class="btn btn-primary btn-xs" href="';
+      									html += '<a type="button" style="white-space:normal;" class="btn btn-primary btn-xs btn-block" href="';
       									html += obj_pk;
       									html += '/">';
       									html += obj_subject.split('Microsoft')[0];
@@ -99,7 +99,7 @@
         				}
         				else if(j == nDays){
         					for (m ; m <= j; m++){
-        						html +='<td class="text-center" style="background-color:lightgrey">';
+        						html +='<td class="col-md-1 text-center" style="background-color:lightgrey">';
         						//get the Django's data and parse to JSON object; then decide which day should map in as a button;
         						for (q in obj){
       								var obj_day = Number(obj[q].fields.start_time.split('-')[2].split('T')[0]);
@@ -107,7 +107,7 @@
       								var obj_subject = obj[q].fields.subject;
       								html += '<div class="btn-group-vertical" role="group" aria-label="...">';
       								if (obj_day == m){
-      									html += '<a type="button" class="btn btn-primary btn-xs" href="';
+      									html += '<a type="button" style="white-space:normal;" class="btn btn-primary btn-xs btn-block" href="';
       									html += obj_pk;
       									html += '/">';
       									html += obj_subject.split('Microsoft')[0];
@@ -122,7 +122,7 @@
         				}
         				else{
         					for (m ; m <= j; m++){
-        						html +='<td class="text-center" style="background-color:lightgrey">';
+        						html +='<td class="col-md-1 text-center" style="background-color:lightgrey">';
         						//get the Django's data and parse to JSON object; then decide which day should map in as a button;
         						for (q in obj){
       								var obj_day = Number(obj[q].fields.start_time.split('-')[2].split('T')[0]);
@@ -130,7 +130,7 @@
       								var obj_subject = obj[q].fields.subject;
       								html += '<div class="btn-group-vertical" role="group" aria-label="...">';
       								if (obj_day == m){
-      									html += '<a type="button" class="btn btn-primary btn-xs" href="';
+      									html += '<a type="button" style="white-space:normal;" class="btn btn-primary btn-xs btn-block" href="';
       									html += obj_pk;
       									html += '/">';
       									html += obj_subject.split('Microsoft')[0];
@@ -168,7 +168,7 @@
    <!-- <link href="starter-template.css" rel="stylesheet"> -->
 </head>
 <body>
-	<nav class="navbar navbar-inverse navbar-fixed-top">
+	<nav class="navbar navbar-inverse navbar-static-top">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -189,36 +189,31 @@
       </div>
   </nav>
 
-    <div class="jumbotron">
+    <div class="container">
       <div class="row">
-      	<div class="col-md-2">
-      	</div>
-      	<div class="col-md-1 text-center" style="display: table-cell; height: 100%; min-height: 100%; float: none;">
-      		<p><a class="btn btn-primary btn-lg" href="#" role="button">&laquo;Prev.</a></p>      		
-      	</div>
-      	<div class="col-md-6 text-center" style="display: table-cell; height: 100%; min-height: 100%; float: none;">
-        	<h1 id="calendarheader">
+      	<div class="col-sm-offset-5 col-sm-2 text-center">
+      		<div class="btn-group" data-toggle="buttons">
+      		<a class="btn btn-primary btn-lg" href="#" role="button">&laquo;Prev.</a>
+      	   	<label id="calendarheader" class="btn">
           	<script type="text/javascript">
             	displayCurrentMonthYear();
           	</script>
-        	</h1>
-        </div>
-        <div class="col-md-1 text-center" style="display: table-cell; height: 100%; min-height: 100%; float: none;">
-        	<p><a class="btn btn-primary btn-lg" href="#" role="button">Next&raquo;</a></p>          	
+        	</label>          	        
+      		<a class="btn btn-primary btn-lg" href="#" role="button">Next&raquo;</a>
+      		</div>
       	</div>
-      	<div class="col-md-2">
-      	</div>
+      	
       </div>
       <div class="container">
         <table class="table table-bordered table-hover">
           <thead><tr>
-            <th class="danger text-center">Sun.</th>
-            <th class="info text-center">Mon.</th>
-            <th class="info text-center">Tue.</th>
-            <th class="info text-center">Wed.</th>
-            <th class="info text-center">Thu.</th>
-            <th class="info text-center">Fri.</th>
-            <th class="danger text-center">Sat.</th>
+            <th class="col-md-1 danger text-center">Sun.</th>
+            <th class="col-md-1 info text-center">Mon.</th>
+            <th class="col-md-1 info text-center">Tue.</th>
+            <th class="col-md-1 info text-center">Wed.</th>
+            <th class="col-md-1 info text-center">Thu.</th>
+            <th class="col-md-1 info text-center">Fri.</th>
+            <th class="col-md-1 danger text-center">Sat.</th>
           </tr></thead>
           <tbody>          	
           	<script type="text/javascript">
@@ -227,14 +222,7 @@
           </tbody>
         </table>
       </div>
-      <div class="jumbotron">
-    		<div class="container">
-      			<h1>Appointments</h1>
-      			<p><script type="text/javascript">
-      				
-      			</script></p>    
-    		</div>
-  	</div>
+     
 <!--
       <div class="container">
         <div class="row" style='height:1em';>
